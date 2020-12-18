@@ -1,0 +1,35 @@
+name: Build, test and publish NuGet packages
+
+on:
+  push:
+    branches: [ main ]
+    tags: 
+      - '*'
+
+jobs:
+  build:
+    name: Build, test and publish NuGet package
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test  --verbosity normal
+    - name: Publish packages
+      run: dotnet msbuild -t:PushPackages
+      env:
+        NuGetApiKey: ${{ secrets.NUGET_API_KEY }}
+    - name: Save Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: nuget-package
+        path: artifacts/packages/Release/*.nupkg
