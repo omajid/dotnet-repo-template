@@ -10,7 +10,7 @@
 
   <!-- Server for pushing nuget packages -->
   <PropertyGroup>
-    <NuGetPushServer>https://www.myget.org/F/tmds/api/v3/index.json</NuGetPushServer>
+    <NuGetPushServer>https://www.myget.org/F/omajid/api/v3/index.json</NuGetPushServer>
   </PropertyGroup>
 
   <!-- Target Frameworks -->
